@@ -1,0 +1,28 @@
+{
+  "systems": [
+    {
+      "system_name": "Email Server (Exchange)",
+      "status": "operational",
+      "last_checked": "2025-01-01T10:00:00",
+      "details": "Healthy"
+    },
+    {
+      "system_name": "VPN Gateway",
+      "status": "degraded",
+      "last_checked": "2025-01-01T10:00:00",
+      "details": "US-East server experiencing high latency"
+    },
+    {
+      "system_name": "Active Directory",
+      "status": "operational",
+      "last_checked": "2025-01-01T10:00:00",
+      "details": "Healthy"
+    },
+    {
+      "system_name": "Print Server",
+      "status": "down",
+      "last_checked": "2025-01-01T10:00:00",
+      "details": "Maintenance in progress"
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "tickets": [
+    {
+      "ticket_id": "TK-101",
+      "issue": "Forgot password after vacation",
+      "category": "password_reset",
+      "resolution": "Sent self-service reset link. Resolved.",
+      "resolved": true,
+      "resolution_time_hours": 0.2
+    },
+    {
+      "ticket_id": "TK-102",
+      "issue": "VPN drops connection constantly",
+      "category": "network_issue",
+      "resolution": "Flushed DNS and switched gateway region. Resolved.",
+      "resolved": true,
+      "resolution_time_hours": 1.0
+    },
+    {
+      "ticket_id": "TK-103",
+      "issue": "Phishing email with attachment",
+      "category": "security_incident",
+      "resolution": "Blocked sender, alerted SOC team.",
+      "resolved": true,
+      "resolution_time_hours": 0.5
+    }
+  ]
+}

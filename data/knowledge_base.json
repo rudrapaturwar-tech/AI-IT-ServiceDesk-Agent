@@ -1,0 +1,98 @@
+{
+  "articles": [
+    {
+      "article_id": "KB001",
+      "title": "Password Reset - Self Service",
+      "category": "password_reset",
+      "problem": "Cannot login or forgotten password",
+      "solution": "Guide user to self-service portal",
+      "steps": [
+        "Go to https://passwordreset.company.com",
+        "Enter Employee ID",
+        "Verify OTP",
+        "Set new password"
+      ],
+      "tags": [
+        "password",
+        "login",
+        "locked"
+      ],
+      "success_rate": 0.95
+    },
+    {
+      "article_id": "KB002",
+      "title": "VPN Connection Troubleshooting",
+      "category": "network_issue",
+      "problem": "Unable to connect to VPN",
+      "solution": "Restart client and verify DNS/Server",
+      "steps": [
+        "Check internet connection",
+        "Restart VPN Client",
+        "Try alternate server region",
+        "Flush DNS cache"
+      ],
+      "tags": [
+        "vpn",
+        "network",
+        "connection"
+      ],
+      "success_rate": 0.85
+    },
+    {
+      "article_id": "KB003",
+      "title": "Software Center Install",
+      "category": "software_install",
+      "problem": "Need software installed",
+      "solution": "Use Company Software Center",
+      "steps": [
+        "Open Software Center from Start Menu",
+        "Search requested software",
+        "Click Install"
+      ],
+      "tags": [
+        "install",
+        "software",
+        "app"
+      ],
+      "success_rate": 0.9
+    },
+    {
+      "article_id": "KB004",
+      "title": "Outlook Sync Fix",
+      "category": "email_issue",
+      "problem": "Emails not syncing in Outlook",
+      "solution": "Clear cache and repair profile",
+      "steps": [
+        "Check internet status",
+        "Toggle Work Offline mode",
+        "Clear Outlook RoamCache",
+        "Restart Outlook"
+      ],
+      "tags": [
+        "email",
+        "outlook",
+        "sync"
+      ],
+      "success_rate": 0.88
+    },
+    {
+      "article_id": "KB005",
+      "title": "System Performance Optimization",
+      "category": "performance_issue",
+      "problem": "Computer running very slow",
+      "solution": "Run disk cleanup and disable startup apps",
+      "steps": [
+        "Restart computer",
+        "Open Task Manager to inspect memory",
+        "Run Disk Cleanup on C: drive",
+        "Disable unused startup apps"
+      ],
+      "tags": [
+        "slow",
+        "performance",
+        "freeze"
+      ],
+      "success_rate": 0.8
+    }
+  ]
+}
