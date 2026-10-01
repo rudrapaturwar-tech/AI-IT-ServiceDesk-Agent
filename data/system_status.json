@@ -1,28 +1,36 @@
 {
   "systems": [
     {
-      "system_name": "Email Server (Exchange)",
+      "system_name": "Active Directory PDC (DC01.corp)",
+      "service_type": "Authentication",
       "status": "operational",
-      "last_checked": "2025-01-01T10:00:00",
-      "details": "Healthy"
+      "latency_ms": 12,
+      "last_checked": "2025-01-15T14:30:00Z",
+      "details": "All Kerberos ticket granting services healthy. 0 queue backlog."
     },
     {
-      "system_name": "VPN Gateway",
+      "system_name": "Corporate VPN Gateway (US-East)",
+      "service_type": "Network Tunneling",
       "status": "degraded",
-      "last_checked": "2025-01-01T10:00:00",
-      "details": "US-East server experiencing high latency"
+      "latency_ms": 380,
+      "last_checked": "2025-01-15T14:30:00Z",
+      "details": "Packet drop rate at 18.4% due to upstream ISP fiber cut. US-West Gateway operational."
     },
     {
-      "system_name": "Active Directory",
+      "system_name": "Microsoft Exchange Online Cluster",
+      "service_type": "Messaging",
       "status": "operational",
-      "last_checked": "2025-01-01T10:00:00",
-      "details": "Healthy"
+      "latency_ms": 25,
+      "last_checked": "2025-01-15T14:30:00Z",
+      "details": "Mail transport agents operating normally."
     },
     {
-      "system_name": "Print Server",
-      "status": "down",
-      "last_checked": "2025-01-01T10:00:00",
-      "details": "Maintenance in progress"
+      "system_name": "CrowdStrike Falcon EDR Bridge",
+      "service_type": "Security Monitoring",
+      "status": "operational",
+      "latency_ms": 8,
+      "last_checked": "2025-01-15T14:30:00Z",
+      "details": "Endpoint sensors active across 4,200 workstations."
     }
   ]
 }

@@ -1,98 +1,98 @@
 {
   "articles": [
     {
-      "article_id": "KB001",
-      "title": "Password Reset - Self Service",
+      "article_id": "KB-AUTH-101",
+      "title": "Active Directory Kerberos & Account Lockout Remediation",
       "category": "password_reset",
-      "problem": "Cannot login or forgotten password",
-      "solution": "Guide user to self-service portal",
-      "steps": [
-        "Go to https://passwordreset.company.com",
-        "Enter Employee ID",
-        "Verify OTP",
-        "Set new password"
-      ],
       "tags": [
         "password",
-        "login",
-        "locked"
+        "locked",
+        "active directory",
+        "credentials",
+        "kerberos",
+        "login"
       ],
-      "success_rate": 0.95
+      "problem": "User account locked due to repeated bad password attempts or expired Kerberos token.",
+      "solution": "Verify identity via multi-factor challenge, unlock Active Directory object, and issue time-bound self-service reset token.",
+      "steps": [
+        "Query Active Directory PDC Emulator for badPwdCount attribute.",
+        "Trigger MFA push notification to user's registered authenticator app.",
+        "Execute automated domain unlock script via PowerShell bridge.",
+        "Generate 15-minute expiring SHA-256 self-service reset token."
+      ],
+      "success_rate": 0.96,
+      "sla_minutes": 5
     },
     {
-      "article_id": "KB002",
-      "title": "VPN Connection Troubleshooting",
+      "article_id": "KB-NET-204",
+      "title": "Cisco AnyConnect & WireGuard VPN Tunnel Instability",
       "category": "network_issue",
-      "problem": "Unable to connect to VPN",
-      "solution": "Restart client and verify DNS/Server",
-      "steps": [
-        "Check internet connection",
-        "Restart VPN Client",
-        "Try alternate server region",
-        "Flush DNS cache"
-      ],
       "tags": [
         "vpn",
-        "network",
-        "connection"
+        "tunnel",
+        "disconnect",
+        "cisco",
+        "wireguard",
+        "mtu",
+        "gateway"
       ],
-      "success_rate": 0.85
+      "problem": "VPN connection drops every 5-10 minutes with TLS handshake timeout or MTU packet blackholing.",
+      "solution": "Adjust virtual adapter MTU to 1350, flush local DNS resolver cache, and switch to secondary low-latency edge gateway.",
+      "steps": [
+        "Flush local Windows DNS Cache via `ipconfig /flushdns`.",
+        "Set VPN interface MTU to 1350 bytes to avoid packet fragmentation.",
+        "Reroute traffic to secondary VPN Gateway (us-west-gw02.corp.internal).",
+        "Restart AnyConnect agent service (`vpnagent.exe`)."
+      ],
+      "success_rate": 0.89,
+      "sla_minutes": 15
     },
     {
-      "article_id": "KB003",
-      "title": "Software Center Install",
-      "category": "software_install",
-      "problem": "Need software installed",
-      "solution": "Use Company Software Center",
-      "steps": [
-        "Open Software Center from Start Menu",
-        "Search requested software",
-        "Click Install"
-      ],
+      "article_id": "KB-SEC-911",
+      "title": "Phishing Incident Containment & Credential Harvesting Mitigation",
+      "category": "security_incident",
       "tags": [
-        "install",
-        "software",
-        "app"
+        "phishing",
+        "malware",
+        "suspicious",
+        "attachment",
+        "soc",
+        "credential",
+        "threat"
       ],
-      "success_rate": 0.9
+      "problem": "Employee received targeted spear-phishing email with malicious macro/payload or credential harvester.",
+      "solution": "Immediate endpoint isolation, revoke active Azure AD refresh tokens, purge email from all mailboxes via Exchange EDR.",
+      "steps": [
+        "Quarantine workstation network access via EDR Sentinel agent.",
+        "Revoke all active Azure AD/O365 user session tokens.",
+        "Extract sender IP and malicious URL to update corporate Palo Alto firewall blocklist.",
+        "Dispatch forensic ticket to Tier-3 SOC Incident Response Team."
+      ],
+      "success_rate": 0.99,
+      "sla_minutes": 2
     },
     {
-      "article_id": "KB004",
-      "title": "Outlook Sync Fix",
-      "category": "email_issue",
-      "problem": "Emails not syncing in Outlook",
-      "solution": "Clear cache and repair profile",
-      "steps": [
-        "Check internet status",
-        "Toggle Work Offline mode",
-        "Clear Outlook RoamCache",
-        "Restart Outlook"
-      ],
+      "article_id": "KB-HW-302",
+      "title": "Display Driver Unresponsive & GPU Pipeline Desync",
+      "category": "hardware_issue",
       "tags": [
-        "email",
-        "outlook",
-        "sync"
+        "screen",
+        "flicker",
+        "monitor",
+        "display",
+        "gpu",
+        "hardware",
+        "lines"
       ],
-      "success_rate": 0.88
-    },
-    {
-      "article_id": "KB005",
-      "title": "System Performance Optimization",
-      "category": "performance_issue",
-      "problem": "Computer running very slow",
-      "solution": "Run disk cleanup and disable startup apps",
+      "problem": "External monitor or laptop panel displaying horizontal artifact lines and intermittent black screens.",
+      "solution": "Perform soft graphics driver reset, inspect DisplayPort/Thunderbolt bus telemetry, or trigger hardware asset replacement.",
       "steps": [
-        "Restart computer",
-        "Open Task Manager to inspect memory",
-        "Run Disk Cleanup on C: drive",
-        "Disable unused startup apps"
+        "Trigger Windows graphics pipeline reset shortcut: Win+Ctrl+Shift+B.",
+        "Check DisplayPort handshake negotiation logs in Event Viewer.",
+        "If artifacts persist across cold reboot, flag for physical LCD/eDP cable hardware replacement."
       ],
-      "tags": [
-        "slow",
-        "performance",
-        "freeze"
-      ],
-      "success_rate": 0.8
+      "success_rate": 0.65,
+      "sla_minutes": 60
     }
   ]
 }
