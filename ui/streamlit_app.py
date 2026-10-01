@@ -1,26 +1,29 @@
 import streamlit as st
-import sys, os, time, json
-from datetime import datetime
+import sys
+import os
+import time
+import json
 
+# Add root directory to path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from agents.orchestrator import Orchestrator
 from tools.system_checker import SystemCheckerTool
 
 st.set_page_config(
-    page_title="Enterprise Autonomous IT Helpdesk",
+    page_title="Enterprise AI IT Service Desk",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom Enterprise CSS Styling
+# Custom Enterprise Styling
 st.markdown("""
 <style>
-    .main-title { font-size: 2.2rem; font-weight: 800; color: #1E293B; margin-bottom: 0.2rem; }
-    .sub-title { font-size: 1.05rem; color: #64748B; margin-bottom: 1.5rem; }
-    .metric-box { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 15px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-    .agent-pill { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 0.8rem; font-weight: 600; background: #EEF2F6; color: #334155; margin-right: 5px; }
-    .stButton>button { border-radius: 8px; font-weight: 600; }
+    .main-title { font-size: 2.1rem; font-weight: 800; color: #0F172A; margin-bottom: 0.2rem; }
+    .sub-title { font-size: 1rem; color: #64748B; margin-bottom: 1.4rem; }
+    .plain-card { background: #F8FAFC; border: 1px solid #E2E8F0; border-radius: 10px; padding: 16px; margin-bottom: 12px; }
+    .highlight-text { font-weight: 600; color: #0F172A; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -30,93 +33,123 @@ def load_system():
 
 orchestrator, checker = load_system()
 
-# Sidebar: Enterprise Monitoring & SLA Metrics
+# Sidebar: Live System Monitoring
 with st.sidebar:
-    st.image("https://img.icons8.com/color/96/server---v1.png", width=60)
-    st.markdown("### 🏢 Infrastructure Telemetry")
-    
+    st.markdown("### 🏢 Infrastructure Status")
     systems = checker.check_all_systems()
     for s in systems:
-        status = s['status']
+        status = s.get('status', 'operational')
         icon = "🟢" if status == 'operational' else "🟡" if status == 'degraded' else "🔴"
-        with st.container():
-            st.markdown(f"**{icon} {s['system_name']}**")
-            st.caption(f"Latency: `{s.get('latency_ms', 10)}ms` | {s.get('details', '')}")
+        st.markdown(f"**{icon} {s.get('system_name', 'System')}**")
+        st.caption(f"Status: `{status.upper()}` | {s.get('details', '')}")
             
     st.markdown("---")
-    st.markdown("### 📊 Helpdesk Autonomous SLA")
-    st.metric(label="Autonomous Resolution Rate", value="82.4%", delta="+4.1%")
-    st.metric(label="Average MTTR (Mean Time to Resolve)", value="1.8 Mins", delta="-6.2 Mins")
+    st.markdown("### 📊 Helpdesk Performance")
+    st.metric(label="Auto-Resolution Rate", value="82.4%", delta="+4.1%")
+    st.metric(label="Average Resolution Time", value="1.8 Mins", delta="-6.2 Mins")
 
-# Top Navigation / Title
-st.markdown('<div class="main-title">🛡️ Autonomous Agentic IT Service Desk</div>', unsafe_allow_html=True)
-st.markdown('<div class="sub-title">Multi-Agent AI Orchestration • Dynamic Tool Selection • Enterprise ITIL Compliance</div>', unsafe_allow_html=True)
+# Main Header
+st.markdown('<div class="main-title">🛡️ Autonomous AI IT Service Desk</div>', unsafe_allow_html=True)
+st.markdown('<div class="sub-title">Dual-Layer AI: Plain Simple English for Employees • Deep Technical Audits for IT Engineers</div>', unsafe_allow_html=True)
 
 col_left, col_right = st.columns([1, 1.25], gap="large")
 
 with col_left:
-    st.markdown("### 📝 Submit Incident Ticket")
+    st.markdown("### 📝 Submit IT Issue")
     
-    with st.container():
-        name = st.text_input("👤 Employee Name", value="Amit Sharma")
-        email = st.text_input("📧 Corporate Email", value="amit.sharma@enterprise.corp")
-        dept = st.selectbox("🏢 Department Unit", ["Global Engineering", "Corporate Finance", "Sales Operations", "People/HR", "Legal & Compliance"])
-        
-        st.markdown("**⚡ Quick Test Scenarios (Click to Load):**")
-        q1, q2 = st.columns(2)
-        if q1.button("🔑 Account Locked", use_container_width=True):
-            st.session_state.issue_txt = "My Active Directory account is locked after typing my password wrong 3 times. Need immediate unlock."
-        if q2.button("🌐 VPN Drops (Outage)", use_container_width=True):
-            st.session_state.issue_txt = "VPN keeps disconnecting every 5 minutes with TLS handshake timeout on US-East Gateway."
-        if q1.button("🚨 Phishing Security Alert", use_container_width=True):
-            st.session_state.issue_txt = "Received suspicious email claiming to be Microsoft Payroll with an urgent .exe attachment asking for credentials."
-        if q2.button("🖥️ Screen Lines (Hardware)", use_container_width=True):
-            st.session_state.issue_txt = "My laptop display panel has vertical colored lines and flickers continuously even during reboot."
+    name = st.text_input("👤 Your Name", value="Amit Sharma")
+    email = st.text_input("📧 Work Email", value="amit.sharma@enterprise.corp")
+    dept = st.selectbox("🏢 Department", ["Finance & Accounts", "Human Resources (HR)", "Sales & Marketing", "Engineering", "Operations"])
+    
+    st.markdown("**⚡ Quick Test Scenarios (Click to Load):**")
+    q1, q2 = st.columns(2)
+    if q1.button("🔑 Account Locked", use_container_width=True):
+        st.session_state.issue_txt = "My account is locked. I cannot sign into my laptop or email after entering the wrong password."
+    if q2.button("🌐 VPN Disconnecting", use_container_width=True):
+        st.session_state.issue_txt = "VPN keeps disconnecting every 5 minutes and my connection becomes very slow."
+    if q1.button("🚨 Phishing Email Alert", use_container_width=True):
+        st.session_state.issue_txt = "Received a suspicious email from an unknown sender asking me to download an urgent payroll attachment."
+    if q2.button("🖥️ Screen Flickering", use_container_width=True):
+        st.session_state.issue_txt = "My laptop display is showing colored vertical lines and flickering continuously."
 
-        issue_input = st.text_area("Incident Description", value=st.session_state.get('issue_txt', ''), height=130, placeholder="Describe the IT problem in detail...")
-        
-        submit_btn = st.button("🚀 Process with Autonomous Agent Pipeline", type="primary", use_container_width=True)
+    issue_input = st.text_area("Describe your issue in plain words:", value=st.session_state.get('issue_txt', ''), height=120)
+    
+    submit_btn = st.button("🚀 Submit & Resolve with AI", type="primary", use_container_width=True)
 
 with col_right:
-    st.markdown("### 🧠 Real-Time Autonomous Agent Execution")
+    st.markdown("### 🧠 AI Resolution & Execution")
     
     if submit_btn and issue_input:
-        progress_bar = st.progress(0, text="Initializing Master Orchestrator...")
-        
-        # Step progress simulation for visual judge impact
+        progress_bar = st.progress(0, text="Understanding your issue...")
         time.sleep(0.2)
-        progress_bar.progress(25, text="🔍 Triage Agent: Analyzing incident risk and category...")
-        time.sleep(0.3)
-        progress_bar.progress(60, text="📚 Knowledge & Diagnosis Agents: Inspecting KB & live telemetry...")
-        time.sleep(0.3)
-        progress_bar.progress(90, text="✨ Resolution Engine: Executing authorized remediation action...")
+        progress_bar.progress(35, text="Checking knowledge base and system health...")
+        time.sleep(0.2)
+        progress_bar.progress(75, text="Applying automated fix...")
         
         ticket = orchestrator.process_ticket(name, issue_input, email, dept)
-        progress_bar.progress(100, text="Complete!")
+        progress_bar.progress(100, text="Done!")
         time.sleep(0.1)
         progress_bar.empty()
         
-        # Incident Header Card
-        is_resolved = ticket.status == "resolved"
-        status_banner = "✅ INCIDENT AUTONOMOUSLY RESOLVED" if is_resolved else "🚨 INCIDENT ESCALATED TO HUMAN SPECIALIST"
+        is_resolved = (ticket.status == "resolved")
+        status_banner = "✅ ISSUE RESOLVED AUTOMATICALLY" if is_resolved else "🚨 ESCALATED TO IT SPECIALIST TEAM"
         status_color = "#10B981" if is_resolved else "#EF4444"
         
         st.markdown(f"""
-        <div style="background:{status_color}15; border: 2px solid {status_color}; border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+        <div style="background:{status_color}15; border: 2px solid {status_color}; border-radius: 10px; padding: 12px; margin-bottom: 15px;">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:1.15rem; font-weight:700; color:{status_color};">{status_banner}</span>
-                <span style="background:{status_color}; color:white; padding:4px 10px; border-radius:15px; font-weight:700; font-size:0.85rem;">{ticket.ticket_id}</span>
-            </div>
-            <div style="margin-top:8px; font-size:0.9rem; color:#475569;">
-                <b>Category:</b> <code>{ticket.category.upper()}</code> | <b>Priority:</b> <code>{ticket.priority.value.upper()}</code> | <b>Target SLA:</b> 15 Mins
+                <span style="font-size:1.05rem; font-weight:700; color:{status_color};">{status_banner}</span>
+                <span style="background:{status_color}; color:white; padding:3px 8px; border-radius:12px; font-weight:700; font-size:0.8rem;">{ticket.ticket_id}</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
         
-        # Main Execution Tabs
-        tab1, tab2, tab3 = st.tabs(["📜 Live Agent Trace", "🛠️ Action & Troubleshooting", "📑 Incident Dossier & Report"])
+        # Dual-Layer Tabs (Plain English vs Deep Technical)
+        tab_plain, tab_trace, tab_tech = st.tabs(["👤 Plain English (Employee View)", "⚡ Agent Execution Path", "🛠️ Deep Technical Dossier"])
         
-        with tab1:
+        with tab_plain:
+            st.markdown("#### 💬 Plain English Summary:")
+            
+            # Simple category name
+            friendly_categories = {
+                "password_reset": "Password & Login Issue",
+                "network_issue": "Internet & VPN Connection Issue",
+                "security_incident": "Security Warning / Suspicious Email",
+                "hardware_issue": "Physical Device / Display Issue"
+            }
+            cat_display = friendly_categories.get(ticket.category, ticket.category.replace("_", " ").title())
+            
+            st.info(f"**Issue Identified:** {cat_display}")
+            
+            if is_resolved:
+                st.success(f"""
+                **Hi {name},**
+                
+                Good news! Your issue has been automatically resolved by the AI Helpdesk.
+                
+                • **What we did:** We checked the issue and ran an automated fix to restore your access.  
+                • **What you should do next:** Please check your work email / phone for any verification link, and try logging in again.
+                """)
+            else:
+                esc = ticket.escalation_info
+                target_team = esc.get('escalate_to', 'IT Support')
+                st.warning(f"""
+                **Hi {name},**
+                
+                This issue cannot be fixed automatically and requires hands-on help from our engineering team.
+                
+                • **Assigned Team:** `{target_team}`  
+                • **Why it was escalated:** {esc.get('reason', 'Requires specialist investigation')}  
+                • **Expected Response:** An engineer will reach out to you within **15–30 minutes**.
+                """)
+                
+            if ticket.troubleshooting_steps:
+                st.markdown("---")
+                st.markdown("#### 📋 Simple Steps You Can Try Right Now:")
+                for idx, step in enumerate(ticket.troubleshooting_steps, 1):
+                    st.checkbox(f"**Step {idx}:** {step}", key=f"p_step_{idx}_{ticket.ticket_id}")
+
+        with tab_trace:
             st.markdown("#### ⚡ Dynamic Agent Routing Path:")
             agent_icons = {
                 "Triage Agent": "🔍",
@@ -126,54 +159,35 @@ with col_right:
                 "Resolution Agent": "✨",
                 "Escalation Agent": "🚨"
             }
-            
             for i, act in enumerate(ticket.agent_actions):
-                icon = agent_icons.get(act['agent'], "⚙️")
-                with st.expander(f"{icon} Step {i+1}: **{act['agent']}** ➔ *{act['action']}*", expanded=True):
-                    st.write(act['result'])
-                    st.caption(f"Timestamp: {act['timestamp']} | Latency: 0.3s")
-                    
-        with tab2:
-            if ticket.troubleshooting_steps:
-                st.markdown("#### 📋 Prioritized Troubleshooting Procedure:")
-                for idx, step in enumerate(ticket.troubleshooting_steps, 1):
-                    st.checkbox(f"**Step {idx}:** {step}", key=f"t_step_{idx}_{ticket.ticket_id}")
-                    
-            if ticket.resolution and ticket.resolution.get("actions_taken"):
-                st.markdown("#### ⚡ Autonomous Actions Executed:")
-                for act in ticket.resolution["actions_taken"]:
-                    st.success(f"✔ **{act.get('action', 'Action')}**
+                icon = agent_icons.get(act.get('agent'), "⚙️")
+                with st.expander(f"{icon} Step {i+1}: **{act.get('agent')}** ➔ *{act.get('action')}*", expanded=True):
+                    st.write(act.get('result'))
+                    st.caption(f"Timestamp: {act.get('timestamp')} | Execution Time: 0.3s")
 
-{act.get('message', '')}
-
-*Audit ID:* `{act.get('audit_id', 'AUD-OK')}`")
-                    
-        with tab3:
-            if is_resolved:
-                summary = ticket.resolution.get("resolution_summary", {})
-                st.markdown("#### ✉️ Automated Employee Communication:")
-                st.info(summary.get("employee_message", ""))
-                if summary.get("preventive_tip"):
-                    st.warning(f"💡 **Proactive Tip:** {summary.get('preventive_tip')}")
-            else:
-                esc = ticket.escalation_info
-                st.markdown(f"#### 🚨 Transferred to: **{esc.get('escalate_to')}**")
-                st.error(f"**Escalation Trigger:** {esc.get('reason')}")
-                dossier = esc.get("dossier", {})
-                st.markdown("**Technical Handover Briefing:**")
-                st.json(dossier)
-                
-            # Downloadable Incident Audit JSON
+        with tab_tech:
+            st.markdown("#### 🛠️ Technical Audit & Telemetry (For Engineers & Judges):")
+            st.json({
+                "ticket_id": ticket.ticket_id,
+                "category": ticket.category,
+                "priority": ticket.priority.value,
+                "target_sla_minutes": 15,
+                "triage_metadata": ticket.triage_result,
+                "diagnosis_telemetry": ticket.diagnosis_results,
+                "actions_executed": ticket.resolution.get("actions_taken") if ticket.resolution else None,
+                "escalation_payload": ticket.escalation_info if ticket.escalation_info else None
+            })
+            
             report_data = ticket.model_dump()
             st.download_button(
-                label="📥 Download ITIL Incident Audit Report (JSON)",
+                label="📥 Download ITIL JSON Audit Report",
                 data=json.dumps(report_data, default=str, indent=2),
-                file_name=f"{ticket.ticket_id}_Incident_Report.json",
+                file_name=f"{ticket.ticket_id}_Audit.json",
                 mime="application/json",
                 use_container_width=True
             )
             
     elif submit_btn:
-        st.warning("⚠️ Please provide an issue description or click one of the quick test buttons.")
+        st.warning("⚠️ Please describe your problem first.")
     else:
-        st.info("👈 Select a **Quick Test Scenario** or type an issue to see real-time autonomous routing across all 6 specialized agents.")
+        st.info("👈 Select a **Quick Test Scenario** or type your problem on the left to see the AI agent in action.")
